@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <link href="<c:url value="/res/style.css"/>" rel="stylesheet" type="text/css"/>
     <title>USERS</title>
 
     <style>
@@ -16,6 +15,7 @@
 <h2 align="center"><font color="red">USERS</font></h2>
 
 
+
 <div>
     <h1>Блог сайта</h1>
     <div class="alert alert-info mt-2">
@@ -23,74 +23,10 @@
         <p th:text="${user.age}"/>
         <p th:text="${user.password}"/>
     </div>
-    <div>"${users}"</div>
 </div>
 
 
-<div>
-    <h1>Блог сайта</h1>
-    <div th:each="el : ${users}" class="alert alert-info mt-2">
-        <h3 th:text="${el.name}"/>
-        <p th:text="${el.age}"/>
-        <p th:text="${el.password}"/>
 
-    </div>
-    <div>"${users}"</div>
-</div>
-
-
-<table>
-    <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>password</th>
-        <th>age</th>
-        <th>roles</th>
-    </tr>
-    <c:forEach var="user" items="${userList}">
-        <tr>
-            <td>${user.id}</td>
-            <td>${user.name}</td>
-            <td>${user.password}</td>
-            <td>${user.age}</td>
-            <td>${user.getListRoles()}</td>
-
-            <td>
-                <form>
-                    <input type="button" value="edit" onClick='location.href="/admin/edit/${user.id}"'>
-                    <input type="button" value="delete" onClick='location.href="/admin/delete/${user.id}"'>
-                </form>
-            </td>
-        </tr>
-    </c:forEach>
-
-    <tr>
-        <td>USer count ${usersCount}</td>
-        >
-        <td>
-    <tr>
-        <td>page</td>
-        <td><c:forEach begin="1" end="${pagesCount}" step="1" varStatus="i">
-            <c:url value="/admin" var="url">
-                <c:param name="page" value="${i.index}"/>
-            </c:url>
-            <a href="${url}">${i.index}</a>
-        </c:forEach></td>
-    </tr>
-
-    <td>
-        <c:url value="/admin/add" var="add"/>
-        <form>
-            <input type="button" value="Add new user" onClick='location.href="${add}"'>
-        </form>
-    <td>
-        <a class="button7" href="/logout">LOGOUT</a>
-    </td>
-    <td>
-        <a class="button7" href="/user?username=${username}">User</a>
-        ${user1}
-    </td>
-</table>
-<a class="button7" href="/logout">кнопка</a>
+<a class="button7" href="/logout">Logout</a>
 </body>
 </html>

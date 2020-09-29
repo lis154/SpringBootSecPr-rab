@@ -1,11 +1,13 @@
 package ru.lis154.SpringBootSecPr.Model;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "roles")
-public class Role implements Serializable {
+public class Role implements Serializable, GrantedAuthority {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,4 +51,8 @@ public class Role implements Serializable {
     }
 
 
+    @Override
+    public String getAuthority() {
+        return role;
+    }
 }

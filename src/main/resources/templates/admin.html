@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <link href="<c:url value="/res/style.css"/>" rel="stylesheet" type="text/css"/>
+    <link href="style.css" rel="stylesheet" type="text/css"/>
     <title>USERS</title>
 
     <style>
@@ -11,80 +11,64 @@
             background-image: url("/res/image.jpg"); /* Путь к фоновому изображению */
             background-color: #c7b39b; /* Цвет фона */
         }
+        div.divTable{
+            display: table;
+            width: 100%;
+        }
+        div.divTableRow {
+            display: table-row;
+        }
+        div.divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+        }
+        div.divTableCell, .divTableHead {
+            border: 1px solid #999999;
+            display: table-cell;
+            padding: 3px 10px;
+        }
+        div.divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+            font-weight: bold;
+        }
+        div.divTableFoot {
+            background-color: #EEE;
+            display: table-footer-group;
+            font-weight: bold;
+        }
+        div.divTableBody {
+            display: table-row-group;
+        }
     </style>
 </head>
 <body>
 <h2 align="center"><font color="red">USERS</font></h2>
 
+<div class="divTable">
+    <div class="divTableBody">
+        <div class="divTableRow">
 <div>
     <h1>Блог сайта</h1>
     <div th:each="el : ${users}" class="alert alert-info mt-2">
-        <h3 th:text="${el.name}"/>
-        <p th:text="${el.age}"/>
-        <p th:text="${el.password}"/>
-        <p th:text="${el.id}"/>
-        <p th:text="${el.roles}"/>
-        <a th:href="'/admin/edit/' + ${el.id}">Изменить</a>
-        <a th:href="'/admin/delete/' + ${el.id}">Удалить</a>
+        <div class="divTableCell">  <h3 th:text="${el.name}"/></div>
+            <div class="divTableCell"> <p th:text="${el.age}"/></div>
+                <div class="divTableCell">  <p th:text="${el.password}"/></div>
+                    <div class="divTableCell">  <p th:text="${el.id}"/></div>
+                        <div class="divTableCell">  <p th:text="${el.roles}"/></div>
+        <div class="divTableCell"> <a th:href="'/admin/edit/' + ${el.id}">Изменить</a></div>
+            <div class="divTableCell"> <a th:href="'/admin/delete/' + ${el.id}">Удалить</a></div>
 
 
     </div>
     <a class="p-2 text-dark" href="/admin/add">Добавить пользователя</a>
 </div>
+        </div>
+    </div>
+</div>
+
+<a class="button7" href="/logout" >LOGOUT</a>
 
 
-<table>
-    <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>password</th>
-        <th>age</th>
-        <th>roles</th>
-    </tr>
-    <c:forEach var="user" items="${userList}">
-        <tr>
-            <td>${user.id}</td>
-            <td>${user.name}</td>
-            <td>${user.password}</td>
-            <td>${user.age}</td>
-            <td>${user.getListRoles()}</td>
-
-            <td>
-                <form>
-                    <input type="button" value="edit" onClick='location.href="/admin/edit/${user.id}"'>
-                    <input type="button" value="delete" onClick='location.href="/admin/delete/${user.id}"'>
-                </form>
-            </td>
-        </tr>
-    </c:forEach>
-
-    <tr>
-        <td>USer count ${usersCount}</td>
-        >
-        <td>
-    <tr>
-        <td>page</td>
-        <td><c:forEach begin="1" end="${pagesCount}" step="1" varStatus="i">
-            <c:url value="/admin" var="url">
-                <c:param name="page" value="${i.index}"/>
-            </c:url>
-            <a href="${url}">${i.index}</a>
-        </c:forEach></td>
-    </tr>
-
-    <td>
-        <c:url value="/admin/add" var="add"/>
-        <form>
-            <input type="button" value="Add new user" onClick='location.href="${add}"'>
-        </form>
-    <td>
-        <a class="button7" href="/logout">LOGOUT</a>
-    </td>
-    <td>
-        <a class="button7" href="/user?username=${username}">User</a>
-        ${user1}
-    </td>
-</table>
-<a class="button7" href="/logout">кнопка</a>
 </body>
 </html>

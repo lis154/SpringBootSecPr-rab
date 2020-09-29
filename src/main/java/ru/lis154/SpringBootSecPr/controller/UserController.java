@@ -39,9 +39,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String OneUser(@RequestParam("username") String name, Model model){
-        User listUser = (User) userService.loadUserByUsername(name);
-        model.addAttribute("user", listUser);
+    public String OneUser( Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String nameUser = auth.getName();
+        User user1 = (User)userService.loadUserByUsername(nameUser);
+      //  User listUser = (User) userService.loadUserByUsername(name);
+       // model.addAttribute("user", listUser);
+        model.addAttribute("user", user1);
         return "user";
     }
 

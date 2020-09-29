@@ -1,0 +1,83 @@
+package ru.lis154.SpringBootSecPr.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.lis154.SpringBootSecPr.Model.User;
+import ru.lis154.SpringBootSecPr.service.UserServiceImpl;
+
+import java.util.List;
+
+@Controller
+public class UserController {
+    private int page;
+    private final UserServiceImpl userService;
+
+    @Autowired
+    public UserController(UserServiceImpl userService) {
+        this.userService = userService;
+    }
+
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+        public String allUser(@RequestParam(defaultValue = "1") int page, Model model){
+        List<User> listUser = userService.allUser(page);
+        int userCount = userService.userCount();
+        int pageCout = (userCount + 9) / 10;
+        model.addAttribute("users", listUser);
+        System.out.println(listUser);
+
+         return "admin";
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String OneUser(@RequestParam("username") String name, Model model){
+        User listUser = (User) userService.loadUserByUsername(name);
+        model.addAttribute("user", listUser);
+        return "user";
+    }
+
+    @RequestMapping(value = "/admin/add", method = RequestMethod.GET)
+    public String UserADD( Model model){
+        return "add";
+    }
+
+    @RequestMapping(value = "/admin/add", method = RequestMethod.POST)
+    public String AddUserADD(@RequestParam String name, @RequestParam String password, @RequestParam String age, @RequestParam String role,  Model model){
+        int age1 = Integer.valueOf(age);
+        User user = new User(name, password, age1);
+        user.setRolesOnForm(role);
+        System.out.println(user);
+        userService.add(user);
+        return "redirect:/admin";
+    }
+    @RequestMapping(value = "/admin/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") int id, Model model) {
+        userService.delete(id);
+        return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/admin/edit/{id}", method = RequestMethod.GET)
+    public String UserEdit(@PathVariable("id") String id,   Model model){
+        model.addAttribute("id", id);
+        return "edit";
+    }
+
+    @RequestMapping(value = "/admin/edit", method = RequestMethod.POST)
+    public String EdUserEdit(@RequestParam String id, @RequestParam String name, @RequestParam String password, @RequestParam String age, @RequestParam String role,  Model model){
+        int age1 = Integer.valueOf(age);
+        int id1 =  Integer.valueOf(id);
+        User user = new User(id1, name, password, age1);
+        user.setRolesOnForm(role);
+        System.out.println(user);
+        userService.edit(user);
+        return "redirect:/admin";
+    }
+
+
+
+
+}

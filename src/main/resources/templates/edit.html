@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Блог сайта</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5 mb-5">
+    <h1>Добавление статьи</h1>
+    <form action="/admin/edit" method="post">
+
+        <input type="text" name="id" placeholder="id" class="form-cntrol"><br>
+        <input type="text" name="name" placeholder="name" class="form-cntrol"><br>
+        <input type="text" name="password" placeholder="password" class="form-cntrol"><br>
+        <input type="text" name="age" placeholder="age" class="form-cntrol"><br>
+        <input type="text" name="role" placeholder="role" class="form-cntrol"><br>
+        <button type="submit" class="btn btn-success">Добавить пользователя</button>
+    </form>
+</div>
+
+
+
+</body>
+</html>

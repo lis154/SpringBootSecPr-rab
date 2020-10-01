@@ -32,7 +32,14 @@ public class UserController {
         List<User> listUser = userService.allUser(page);
         int userCount = userService.userCount();
         int pageCout = (userCount + 9) / 10;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String nameUser = auth.getName();
+        User user1 = (User)userService.loadUserByUsername(nameUser);
+        String roles = user1.getListRoles();
         model.addAttribute("users", listUser);
+        model.addAttribute("name", nameUser);
+        model.addAttribute("role", roles);
+
         System.out.println(listUser);
 
          return "admin";

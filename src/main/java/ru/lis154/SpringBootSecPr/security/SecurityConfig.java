@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/add").access("hasAuthority('ROLE_ADMIN')")
                 .antMatchers("/admin/add/*").access("hasAuthority('ROLE_ADMIN')")
                 .antMatchers("/admin/edit").access("hasAuthority('ROLE_ADMIN')")
+                .antMatchers("/admin/bootPrim").access("hasAuthority('ROLE_ADMIN')")
                 .antMatchers("/admin/edit/*").access("hasAuthority('ROLE_ADMIN')")
                 .antMatchers("/admin/delete").access("hasAuthority('ROLE_ADMIN')")
                 .antMatchers("/admin").access("hasAuthority('ROLE_ADMIN')")

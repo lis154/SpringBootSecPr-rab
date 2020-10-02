@@ -68,8 +68,16 @@
 <!--                </div>-->
 <!--            </div>-->
             <div class="row">
-                <div class="col-md-1"><a href="/admin"><p>Users table</p></a></div>
-                <div class="col-md-1"><a href="/admin/add"><p>New user</p></a></div>
+<!--                <div class="col-md-1"><a href="/admin"><p>Users table</p></a></div>-->
+<!--                <div class="col-md-1"><a href="/admin/add"><p>New user</p></a></div>-->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin">Users table</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/add">New User</a>
+                    </li>
+                </ul>
             </div>
             <div>
                 <div  style="background: #eeeeea"><h3><small><b>All users </b></small></h3></div>
@@ -87,7 +95,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <div th:each="el : ${users}" class="alert alert-info mt-2">
+                        <div th:each="el : ${users}" >
                             <tr>
                                 <td><p th:text="${el.id}"/></td>
                                 <td><p th:text="${el.name}"/></td>
@@ -108,22 +116,44 @@
     </div>
 </div>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-    Запустить модальное окно
-</button>
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">-->
+<!--    Запустить модальное окно-->
+<!--</button>-->
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit user</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                ...
+                <div class=" container col-8 text-center" >
+                    <form action="/admin/add" method="POST">
+                        <div class="form-group">
+                            <label for="name"><b><p>Name</p></b></label>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><b><p>Password</p></b></label>
+                            <input type="password" name="password" class="form-control" id="password" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="age"><b><p>Age</p></b></label>
+                            <input type="text" name="age" class="form-control" id="age" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="role"><b><p>Role</p></b></label>
+
+                            <select class="form-control" id="role" name="role">
+                                <option>ROLE_ADMIN</option>>
+                                <option>ROLE_USER</option>
+                            </select> </div>
+                    </form>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

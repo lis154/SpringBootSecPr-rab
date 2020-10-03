@@ -58,6 +58,12 @@ public class UserController {
 
     @RequestMapping(value = "/admin/add", method = RequestMethod.GET)
     public String UserADD( Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String nameUser = auth.getName();
+        User user1 = (User)userService.loadUserByUsername(nameUser);
+        String roles = user1.getListRoles();
+        model.addAttribute("name", nameUser);
+        model.addAttribute("role", roles);
         return "add";
     }
 

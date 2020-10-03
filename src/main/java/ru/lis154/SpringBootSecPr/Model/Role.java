@@ -17,7 +17,7 @@ public class Role implements Serializable, GrantedAuthority {
     private String role;
 
     public Role() {
-        
+
     }
 
     public Role(String role) {
@@ -27,6 +27,7 @@ public class Role implements Serializable, GrantedAuthority {
     public Role(Long id, String role) {
         this.id = id;
         this.role = role;
+        
     }
 
     public Long getId() {

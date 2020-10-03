@@ -17,6 +17,7 @@ public class Role implements Serializable, GrantedAuthority {
     private String role;
 
     public Role() {
+        
     }
 
     public Role(String role) {

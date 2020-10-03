@@ -102,8 +102,11 @@
                                 <td><p th:text="${el.password}"/></td>
                                 <td><p th:text="${el.age}"/></td>
                                 <td><p th:text="${el.getListRoles()}"/></td>
-                                <td><button type="submit" class="btn btn-success " data-toggle="modal" data-target="#exampleModalLong" data-id="${el.name}">edit</button></td>
-                                <td><button type="button" class="btn btn-danger ">delete</button></td>
+<!--                                <td><button type="submit" class="btn btn-success " data-toggle="modal" data-target="#exampleModalLong" data-id="${el.name}">edit</button></td>-->
+<!--                                <td><a data-toggle="modal" data-name="ISBN-001122" title="Add this item" class="btn btn-success" href="#exampleModalLong">test</a></td>-->
+                                <td><a data-toggle="modal" th:data-name="${el.name}" th:data-age="${el.age}" th:data-password="${el.password}" th:data-id="${el.id}" title="Add this item" class="open-AddBookDialog btn btn-primary" href="#exampleModalLong">Edit</a></td>
+                                <td><a data-toggle="modal" th:data-name="${el.name}" th:data-age="${el.age}" th:data-password="${el.password}" th:data-id="${el.id}" title="Add this item" class="open-DeleteDel btn btn-danger" href="#ModalDelete">Delete</a></td>
+<!--                                <td><button type="button" class="btn btn-danger ">delete</button></td>-->
                             </tr>
                         </div>
                         </tbody>
@@ -116,9 +119,6 @@
     </div>
 </div>
 
-<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">-->
-<!--    Запустить модальное окно-->
-<!--</button>-->
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -132,9 +132,9 @@
             </div>
             <div class="modal-body">
                 <div class=" container col-8 text-center" >
-                    <form action="/admin/add" method="POST">
+                    <form action="/admin/edit" method="POST">
                         <div class="form-group">
-                            <label for="name"><b><p id='nameCont'></p></b></label>
+                            <label for="name"><b>name</b></label>
                             <input type="text" name="name" class="form-control" id="name"  placeholder="">
                         </div>
                         <div class="form-group">
@@ -147,34 +147,112 @@
                         </div>
                         <div class="form-group">
                             <label for="role"><b><p>Role</p></b></label>
-
+                            <input type="hidden" name="id" class="form-control" id="id" placeholder="">
                             <select class="form-control" id="role" name="role">
                                 <option>ROLE_ADMIN</option>>
-                                <option>ROLE_USER</option>
+                                <option selected="selected">ROLE_USER</option>
                             </select> </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
                     </form>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
 </div>
 
+
+
+<div class="modal fade" id="ModalDelete" tabindex="-1" role="dialog" aria-labelledby="ModalDel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalDel">Delete user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class=" container col-8 text-center" >
+                    <form action="/admin/delete" method="POST">
+                        <div class="form-group">
+                            <label for="name"><b>name</b></label>
+                            <input type="text" name="name" class="form-control" id="nameD"  placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><b><p>Password</p></b></label>
+                            <input type="password" name="password" class="form-control" id="passwordD" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="age"><b><p>Age</p></b></label>
+                            <input type="text" name="age" class="form-control" id="ageD" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="role"><b><p>Role</p></b></label>
+                            <input type="hidden" name="id" class="form-control" id="idD" placeholder="">
+                            <select class="form-control" id="roleD" name="role">
+                                <option>ROLE_ADMIN</option>>
+                                <option selected="selected">ROLE_USER</option>
+                            </select> </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Delete user</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--<script>-->
+<!--    $(document).on("click", ".open-exampleModalLong", function () {-->
+<!--        var myBookId = $(this).data('name');-->
+<!--        $(".modal-body #nameCont").val( myBookId );-->
+<!--        // As pointed out in comments,-->
+<!--        // it is unnecessary to have to manually call the modal.-->
+<!--        // $('#addBookDialog').modal('show');-->
+<!--    });-->
+<!--</script>-->
+
 <script>
-    // при открытии модального окна
-    $('#exampleModalLong').on('show.bs.modal', function (event) {
-        // получить кнопку, которая его открыло
-        //var button = $(event.relatedTarget)
-        var name = $(event.relatedTarget).data('name');
-        // извлечь информацию из атрибута data-name
-        //var name = button.data('name')
-        // вывести эту информацию в элемент, имеющий id="content"
-        //$(this).find('#id').text(id);
-        $(this).find('#nameCont').text(name);
-    })
+    $(document).on("click", ".open-AddBookDialog", function () {
+        var name1 = $(this).data('name');
+        $(".modal-body #name").val( name1 );
+        var password1 = $(this).data('password');
+        $(".modal-body #password").val( password1 );
+        var age1 = $(this).data('age');
+        $(".modal-body #age").val( age1 );
+        var role1 = $(this).data('role');
+        $(".modal-body #role").val( 'ROLE_USER' );
+        var id1 = $(this).data('id');
+        $(".modal-body #id").val( id1 );
+        // As pointed out in comments,
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+    });
+</script>
+<script>
+    $(document).on("click", ".open-DeleteDel", function () {
+        var name1 = $(this).data('name');
+        $(".modal-body #nameD").val( name1 );
+        var password1 = $(this).data('password');
+        $(".modal-body #passwordD").val( password1 );
+        var age1 = $(this).data('age');
+        $(".modal-body #ageD").val( age1 );
+        var role1 = $(this).data('role');
+        $(".modal-body #roleD").val( 'ROLE_USER' );
+        var id1 = $(this).data('id');
+        $(".modal-body #idD").val( id1 );
+        // As pointed out in comments,
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+    });
 </script>
 
 

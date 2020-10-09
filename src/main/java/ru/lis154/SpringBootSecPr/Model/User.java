@@ -133,10 +133,9 @@ public class User  implements UserDetails {
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", age=" + age +
+                ", roles=" + roles +
                 '}';
     }
-
-
 
     public Set<Role> setRolesOnForm(String str) {
         String[] role = str.split(" ");

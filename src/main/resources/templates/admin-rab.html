@@ -32,7 +32,7 @@
     </style>
 
 </head>
-<body onload=allUsers()>
+<body>
 <!--<nav class="navbar navbar-expand-lg navbar-light bg-light  background-color.navbar-dark"> -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="navbar-brand col-md-11" >
@@ -46,7 +46,7 @@
 <div class ="container-fluid d-flex flex-column ">
     <div class="row flex-fill d-flex h-100 justify-content-start ">
         <div class="col-md-2 p-3 bd-highlight" >
-            <div id="dive_id_1">
+            <div>
                 <form action="/admin" method="get">
                     <button type="submit" class="btn btn-primary  btn-default btn-lg btn-block">Admin</button>
                 </form>
@@ -60,7 +60,16 @@
         </div>
         <div class="col-md-10 p-3 bd-highlight" style="background-color:#faf7f7">
             <div>  <h1> Admin Panel </h1> </div>
+<!--            <div class="row">-->
+<!--                <div class="col-xs-4">-->
+<!--                    <button value="cancel" class="btn btn-primary pull-left">Users table</button>-->
+<!--                    <button value="register" class="btn btn-default  pull-left">New users</button>-->
+<!--                    <div class="clear"></div>-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="row">
+<!--                <div class="col-md-1"><a href="/admin"><p>Users table</p></a></div>-->
+<!--                <div class="col-md-1"><a href="/admin/add"><p>New user</p></a></div>-->
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a class="nav-link active" href="/admin">Users table</a>
@@ -85,37 +94,29 @@
                             <th>Delete</th>
                         </tr>
                         </thead>
-                        <tbody id="prob_1">
-<!--                            <div  th:each="el : ${users}">-->
-<!--                                <tr th:id="'div_' + ${el.id}">-->
-<!--                                <td th:id="'td_id_' + ${el.id}"><p th:text="${el.id}"/></td>-->
-<!--                                <td th:id="'td_name_' + ${el.id}"><p th:text="${el.name}"/></td>-->
-<!--                                <td th:id="'td_password_' + ${el.id}"><p th:text="${el.password}"/></td>-->
-<!--                                <td th:id="'td_age_' + ${el.id}"><p th:text="${el.age}"/></td>-->
-<!--                                <td th:id="'td_roles_' + ${el.id}"><p th:text="${el.getListRoles()}"/></td>-->
-<!--                                &lt;!&ndash;                                <td><button type="submit" class="btn btn-success " data-toggle="modal" data-target="#exampleModalLong" data-id="${el.name}">edit</button></td>&ndash;&gt;-->
-<!--                                &lt;!&ndash;                                <td><a data-toggle="modal" data-name="ISBN-001122" title="Add this item" class="btn btn-success" href="#exampleModalLong">test</a></td>&ndash;&gt;-->
-<!--                                <td><a data-toggle="modal" th:data-name="${el.name}" th:data-age="${el.age}" th:data-password="${el.password}" th:data-id="${el.id}" title="Add this item" class="open-AddBookDialog btn btn-primary" href="#exampleModalLong">Edit</a></td>-->
-<!--                                <td><a data-toggle="modal" th:data-name="${el.name}" th:data-age="${el.age}" th:data-password="${el.password}" th:data-id="${el.id}" title="Add this item" class="open-DeleteDel btn btn-danger" href="#ModalDelete">Delete</a></td>-->
-<!--                                &lt;!&ndash;                                <td><button type="button" class="btn btn-danger ">delete</button></td>&ndash;&gt;-->
-<!--                                </tr>-->
-<!--                            </div>-->
-<!--                                <div id="prob_1">-->
-<!--                                </div>-->
+                        <tbody>
+                        <div th:each="el : ${users}" >
+                            <tr>
+                                <td><p th:text="${el.id}"/></td>
+                                <td><p th:text="${el.name}"/></td>
+                                <td><p th:text="${el.password}"/></td>
+                                <td><p th:text="${el.age}"/></td>
+                                <td><p th:text="${el.getListRoles()}"/></td>
+<!--                                <td><button type="submit" class="btn btn-success " data-toggle="modal" data-target="#exampleModalLong" data-id="${el.name}">edit</button></td>-->
+<!--                                <td><a data-toggle="modal" data-name="ISBN-001122" title="Add this item" class="btn btn-success" href="#exampleModalLong">test</a></td>-->
+                                <td><a data-toggle="modal" th:data-name="${el.name}" th:data-age="${el.age}" th:data-password="${el.password}" th:data-id="${el.id}" title="Add this item" class="open-AddBookDialog btn btn-primary" href="#exampleModalLong">Edit</a></td>
+                                <td><a data-toggle="modal" th:data-name="${el.name}" th:data-age="${el.age}" th:data-password="${el.password}" th:data-id="${el.id}" title="Add this item" class="open-DeleteDel btn btn-danger" href="#ModalDelete">Delete</a></td>
+<!--                                <td><button type="button" class="btn btn-danger ">delete</button></td>-->
+                            </tr>
+                        </div>
                         </tbody>
                     </table>
-<!--                    <table>-->
-<!--                        <tbody>-->
-<!--                        <div id="prob_1">-->
-
-<!--                        </div>-->
-<!--                        </tbody>-->
-<!--                    </table>-->
                 </div>
             </div>
+
+
         </div>
     </div>
-    
 </div>
 
 
@@ -131,31 +132,31 @@
             </div>
             <div class="modal-body">
                 <div class=" container col-8 text-center" >
-                    <!--                    <form action="/admin/edit" method="POST">-->
-                    <div class="form-group">
-                        <label for="name"><b>name</b></label>
-                        <input type="text" name="name" class="form-control" id="name"  placeholder="">
-                    </div>
-                    <div class="form-group">
-                        <label for="password"><b><p>Password</p></b></label>
-                        <input type="password" name="password" class="form-control" id="password" placeholder="">
-                    </div>
-                    <div class="form-group">
-                        <label for="age"><b><p>Age</p></b></label>
-                        <input type="text" name="age" class="form-control" id="age" placeholder="">
-                    </div>
-                    <div class="form-group">
-                        <label for="role"><b><p>Role</p></b></label>
-                        <input type="hidden" name="id" class="form-control" id="id" placeholder="">
-                        <select class="form-control" id="role" name="role">
-                            <option>ROLE_ADMIN</option>>
-                            <option selected="selected">ROLE_USER</option>
-                        </select> </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button  class="btn btn-primary" onClick="edit()" data-dismiss="modal">Save changes</button>
-                    </div>
-                    <!--                    </form>-->
+<!--                    <form action="/admin/edit" method="POST">-->
+                        <div class="form-group">
+                            <label for="name"><b>name</b></label>
+                            <input type="text" name="name" class="form-control" id="name"  placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><b><p>Password</p></b></label>
+                            <input type="password" name="password" class="form-control" id="password" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="age"><b><p>Age</p></b></label>
+                            <input type="text" name="age" class="form-control" id="age" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="role"><b><p>Role</p></b></label>
+                            <input type="hidden" name="id" class="form-control" id="id" placeholder="">
+                            <select class="form-control" id="role" name="role">
+                                <option>ROLE_ADMIN</option>>
+                                <option selected="selected">ROLE_USER</option>
+                            </select> </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button  class="btn btn-primary" onClick="a()">Save changes</button>
+                        </div>
+<!--                    </form>-->
                 </div>
             </div>
         </div>
@@ -175,7 +176,7 @@
             </div>
             <div class="modal-body">
                 <div class=" container col-8 text-center" >
-<!--                    <form action="/admin/delete" method="POST">-->
+                    <form action="/admin/delete" method="POST">
                         <div class="form-group">
                             <label for="name"><b>name</b></label>
                             <input type="text" name="name" class="form-control" id="nameD"  placeholder="">
@@ -197,14 +198,27 @@
                             </select> </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button  class="btn btn-primary" onClick="deleteUser()" data-dismiss="modal">Delete user</button>
+                            <button type="submit" class="btn btn-primary">Delete user</button>
                         </div>
-<!--                    </form>-->
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+<!--<script>-->
+<!--    $(document).on("click", ".open-exampleModalLong", function () {-->
+<!--        var myBookId = $(this).data('name');-->
+<!--        $(".modal-body #nameCont").val( myBookId );-->
+<!--        // As pointed out in comments,-->
+<!--        // it is unnecessary to have to manually call the modal.-->
+<!--        // $('#addBookDialog').modal('show');-->
+<!--    });-->
+<!--</script>-->
 
 <script>
     $(document).on("click", ".open-AddBookDialog", function () {
@@ -218,6 +232,20 @@
         $(".modal-body #role").val( role1);
         var id1 = $(this).data('id');
         $(".modal-body #id").val( id1 );
+        // As pointed out in comments,
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+
+        // var data = {id:$(this).data('id'),
+        //             name:$(this).data('name'),
+        //             password:$(this).data('password'),
+        //             age:$(this).data('age'),
+        //             role:$(this).data('role')
+        //
+        // };
+        // console.log(data);
+
+
     });
 </script>
 <script>
@@ -232,55 +260,25 @@
         $(".modal-body #roleD").val( role1 );
         var id1 = $(this).data('id');
         $(".modal-body #idD").val( id1 );
+        // As pointed out in comments,
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
     });
 </script>
 
-<!--<script>-->
+<script>
+    function a() {
+    var data = {id: $("#id","#exampleModalLong").val(),
+        nams:$("#name","#exampleModalLong").val(),
+        password:$("#password","#exampleModalLong").val(),
+        age:$("#password","#exampleModalLong").val(),
+    };
+    console.log(data)
+    };
+    </script>
 
-<!--    async function a() {-->
-<!--        var data = {-->
-<!--            id: $("#id", "#exampleModalLong").val(),-->
-<!--            name: $("#name", "#exampleModalLong").val(),-->
-<!--            password: $("#password", "#exampleModalLong").val(),-->
-<!--            age: $("#age", "#exampleModalLong").val(),-->
-<!--            roles: [$("#role", "#exampleModalLong").val()],-->
-<!--        };-->
-<!--        let response = await fetch('/admin/edit/json', {-->
-<!--            method: 'POST',-->
-<!--            headers: {-->
-<!--                'Content-Type': 'application/json;charset=utf-8'-->
-<!--            },-->
-<!--            body: JSON.stringify(data)-->
-<!--        });-->
-<!--        let result = await response.json();-->
-<!--        var name_td_id = 'td_id_' + result.id;-->
-<!--        var name_td_name = 'td_name_' + result.id;-->
-<!--        var name_td_password = 'td_password_' + result.id;-->
-<!--        var name_td_age = 'td_age_' + result.id;-->
-<!--        var name_td_roles = 'td_roles_' + result.id;-->
 
-<!--        $('#'+ name_td_id).html('');-->
-<!--        $('#'+ name_td_id).html('<p>' + result.id + '</p>');-->
 
-<!--        $('#'+ name_td_name).html('');-->
-<!--        $('#'+ name_td_name).html('<p>' + result.name + '</p>');-->
-
-<!--        $('#'+ name_td_age).html('');-->
-<!--        $('#'+ name_td_age).html('<p>' + result.age + '</p>');-->
-
-<!--        $('#'+ name_td_password).html('');-->
-<!--        $('#'+ name_td_password).html('<p>' + result.password + '</p>');-->
-
-<!--        $('#'+ name_td_roles).html('');-->
-<!--        $('#'+ name_td_roles).html('<p>' + result.roles[0].role + '</p>');-->
-
-<!--    }-->
-
-<!--</script>-->
-
-<script src="deleteUser.js"></script>
-<script src="allUsers.js"></script>
-<script src="edit.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

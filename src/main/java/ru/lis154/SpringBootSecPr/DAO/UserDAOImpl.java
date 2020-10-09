@@ -123,7 +123,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<User> allUser(int page) {
         Query query = getEntityManager().createQuery("select c from User c");
-        List<User> resultList = query.setFirstResult(10 * (page - 1)).setMaxResults(10).getResultList();
+       // List<User> resultList = query.setFirstResult(10 * (page - 1)).setMaxResults(10).getResultList();
+        List<User> resultList = query.getResultList();
         return resultList;
     }
 

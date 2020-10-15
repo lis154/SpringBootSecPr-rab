@@ -25,8 +25,8 @@ async function allUsers() {
             "                                <td id=\"td_password_'" + json[i].id + "\"><p>" + json[i].password + "</p></td>\n" +
             "                                <td id=\"td_age_" + json[i].id + "\"><p>" + json[i].age + "</p></td>\n" +
             "                                <td id=\"td_roles_" + json[i].id + "\"><p>" + json[i].roles[0].role + "</p></td>\n" +
-            "                                <td><a data-toggle=\"modal\" data-name=\"" + json[i].name + "\" data-age=\"" + json[i].age + "\" data-password=\"" + json[i].password + "\" data-id=\"" + json[i].id + "\" title=\"Add this item\" class=\"open-AddBookDialog btn btn-primary\" href=\"#exampleModalLong\">Edit</a></td>\n" +
-            "                                <td><a data-toggle=\"modal\" data-name=\"" + json[i].name + "\" data-age=\"" + json[i].age + "\" data-password=\"" + json[i].password + "\" data-id=\"" + json[i].id + "\" title=\"Add this item\" class=\"open-DeleteDel btn btn-danger\" href=\"#ModalDelete\">Delete</a></td>\n</tr>" +
+            "                                <td><a data-toggle=\"modal\" data-role=\"" + json[i].roles[0].role + "\" data-name=\"" + json[i].name + "\" data-age=\"" + json[i].age + "\" data-password=\"" + json[i].password + "\" data-id=\"" + json[i].id + "\" title=\"Add this item\" class=\"open-AddBookDialog btn btn-primary\" href=\"#exampleModalLong\">Edit</a></td>\n" +
+            "                                <td><a data-toggle=\"modal\" data-role=\"" + json[i].roles[0].role + "\" data-name=\"" + json[i].name + "\" data-age=\"" + json[i].age + "\" data-password=\"" + json[i].password + "\" data-id=\"" + json[i].id + "\" title=\"Add this item\" class=\"open-DeleteDel btn btn-danger\" href=\"#ModalDelete\">Delete</a></td>\n</tr>" +
             "                                "
         console.log(htmlCode)
     }

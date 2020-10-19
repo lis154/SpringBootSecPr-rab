@@ -115,6 +115,15 @@ public class UserController {
         return "redirect:/";
     }
 
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(auth.getName());
+        System.out.println(auth.getDetails());
+        System.out.println(auth.getAuthorities());
+        System.out.println(auth.getPrincipal());
+        return "admin";
+    }
 
 
 

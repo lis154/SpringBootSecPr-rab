@@ -1,7 +1,10 @@
 package ru.lis154.SpringBootSecPr.security;
 
+import com.sun.net.httpserver.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,13 +13,24 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
+import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.security.oauth2.config.annotation.web.configuration.OAuth2ClientConfiguration;
 
 @Configuration
 @EnableWebSecurity
+//@EnableOAuth2Client
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService; // сервис, с помощью которого тащим пользователя
     private final SuccessUserHandler successUserHandler; // класс, в котором описана логика перенаправления пользователей по ролям
 
+//    @Qualifier("oauth2ClientContext")
+//    @Autowired()
+//    private OAuth2ClientContext oAuthClientContext;
+    
     public SecurityConfig(@Qualifier("userServiceImpl") UserDetailsService userDetailsService, SuccessUserHandler successUserHandler) {
         this.userDetailsService = userDetailsService;
         this.successUserHandler = successUserHandler;
@@ -30,18 +44,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // http.csrf().disable(); - попробуйте выяснить сами, что это даёт
-        http.csrf().disable().authorizeRequests()
 
-                .antMatchers("/user").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')") // разрешаем входить на /user пользователям с ролью User
-                .antMatchers("/admin/add").access("hasAuthority('ROLE_ADMIN')")
-                .antMatchers("/admin/add/*").access("hasAuthority('ROLE_ADMIN')")
-                .antMatchers("/admin/edit").access("hasAuthority('ROLE_ADMIN')")
-                .antMatchers("/admin/bootPrim").access("hasAuthority('ROLE_ADMIN')")
-                .antMatchers("/admin/edit/*").access("hasAuthority('ROLE_ADMIN')")
-                .antMatchers("/admin/delete").access("hasAuthority('ROLE_ADMIN')")
-                .antMatchers("/admin").access("hasAuthority('ROLE_ADMIN')")
-                .and().formLogin()  // Spring сам подставит свою логин форму
-                .successHandler(successUserHandler); // подключаем наш SuccessHandler для перенеправлени
+
+//        http.csrf().disable().authorizeRequests()
+
+//                .antMatchers("/user").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')") // разрешаем входить на /user пользователям с ролью User
+//                .antMatchers("/admin/add").access("hasAuthority('ROLE_ADMIN')")
+//                .antMatchers("/admin/add/*").access("hasAuthority('ROLE_ADMIN')")
+//                .antMatchers("/admin/edit").access("hasAuthority('ROLE_ADMIN')")
+//                .antMatchers("/admin/bootPrim").access("hasAuthority('ROLE_ADMIN')")
+//                .antMatchers("/admin/edit/*").access("hasAuthority('ROLE_ADMIN')")
+//                .antMatchers("/admin/delete").access("hasAuthority('ROLE_ADMIN')")
+//                .antMatchers("/admin").access("hasAuthority('ROLE_ADMIN')")
+//                .and().formLogin()  // Spring сам подставит свою логин форму
+//                .successHandler(successUserHandler); // подключаем наш SuccessHandler для перенеправлени
+
+
+        http.csrf().disable().
+                antMatcher("/**").authorizeRequests()
+                .antMatchers("/").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .oauth2Login();
+
 
 //                .and().formLogin()  // Spring сам подставит свою логин форму
 //                .successHandler(successUserHandler); // подключаем наш SuccessHandler для перенеправления по ролям
@@ -53,4 +78,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public static NoOpPasswordEncoder passwordEncoder() {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
+
+//    @Bean
+//    public FilterRegistrationBean oAuth2ClientFilterRegistration(OAuth2ClientContextFilter oAuth2ClientContextFilter)
+//    {
+//        FilterRegistrationBean registration = new FilterRegistrationBean();
+//        registration.setFilter(oAuth2ClientContextFilter);
+//        registration.setOrder(-100);
+//        return registration;
+//    }
+//
+//    private Filter ssoFilter()
+//    {
+//        OAuth2ClientAuthenticationProcessingFilter googleFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/google");
+//        OAuth2RestTemplate googleTemplate = new OAuth2RestTemplate(google(), oAuth2ClientContext);
+//        googleFilter.setRestTemplate(googleTemplate);
+//        UserInfoTokenServices tokenServices = new UserInfoTokenServices(googleResource().getUserInfoUri(), google().getClientId());
+//        tokenServices.setRestTemplate(googleTemplate);
+//        googleFilter.setTokenServices(tokenServices);
+//        tokenServices.setUserRepo(userRepo);
+//        tokenServices.setPasswordEncoder(passwordEncoder);
+//        return googleFilter;
+//    }
+
 }

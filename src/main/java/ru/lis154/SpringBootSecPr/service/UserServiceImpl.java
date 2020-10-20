@@ -48,6 +48,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userDAO.getById(id);
     }
 
+    @Override
+    public User getByName(String name) {
+        return userDAO.getUserByName(name);
+    }
+
     @Transactional
     public int userCount() {
         return userDAO.userCount();

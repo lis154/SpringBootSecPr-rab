@@ -3,6 +3,7 @@ package ru.lis154.SpringBootSecPr.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +11,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.lis154.SpringBootSecPr.Model.Role;
 import ru.lis154.SpringBootSecPr.Model.User;
 import ru.lis154.SpringBootSecPr.service.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -118,10 +122,16 @@ public class UserController {
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(auth.getName());
-        System.out.println(auth.getDetails());
-        System.out.println(auth.getAuthorities());
-        System.out.println(auth.getPrincipal());
+
+        DefaultOidcUser userOAuth = (DefaultOidcUser) auth.getPrincipal();
+        String role = userOAuth.getAuthorities().toArray()[0].toString();
+        String email = (String) userOAuth.getAttributes().get("email");
+        Set<Role> roles = new HashSet<>();
+        roles.add(new Role(role));
+        User user = new User(email, null, 0);
+        user.setRolesOnForm(role);
+
+        userService.add(user);
         return "admin";
     }
 

@@ -16,5 +16,7 @@ public interface UserService {
 
     User getById(int id);
 
+    User getByName(String name);
+
     public int userCount();
 }

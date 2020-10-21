@@ -19,4 +19,6 @@ public interface UserService {
     User getByName(String name);
 
     public int userCount();
+
+    public  boolean hasNmaOnDB(String name);
 }

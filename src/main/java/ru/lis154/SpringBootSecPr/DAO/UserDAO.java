@@ -20,4 +20,6 @@ public interface UserDAO {
     public int userCount();
 
     public User getUserByName(String name);
+
+    public boolean hasNmaOnDB(String name);
 }

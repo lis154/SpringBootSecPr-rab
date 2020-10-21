@@ -58,6 +58,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userDAO.userCount();
     }
 
+    @Override
+    public boolean hasNmaOnDB(String name) {
+        return userDAO.hasNmaOnDB(name);
+    }
+
     public User loadUserByUsername(String s) {
         return userDAO.getUserByName(s);
     }

@@ -168,6 +168,17 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
+    @Override
+    public boolean hasNmaOnDB(String name1) {
+        Query query = entityManager.createQuery("SELECT COUNT(*) FROM User where name = :name");
+        query.setParameter("name", name1);
+        int rez = ((Number) query.getSingleResult()).intValue();
+        if (rez == 0){
+            return false;
+        }
+        else return true;
+    }
+
 
     @Override
     public int userCount() {

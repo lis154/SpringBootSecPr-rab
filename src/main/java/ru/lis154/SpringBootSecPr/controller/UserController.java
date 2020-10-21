@@ -11,15 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.lis154.SpringBootSecPr.Model.Role;
 import ru.lis154.SpringBootSecPr.Model.User;
 import ru.lis154.SpringBootSecPr.service.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class UserController {
@@ -38,6 +35,7 @@ public class UserController {
         int pageCout = (userCount + 9) / 10;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String nameUser = auth.getName();
+        System.out.println("Name-for-GOOGLE-auth---------" + nameUser);
         User user1 = (User) userService.loadUserByUsername(nameUser);
         String roles = user1.getListRoles();
         model.addAttribute("users", listUser);
@@ -64,6 +62,7 @@ public class UserController {
     public String UserADD(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String nameUser = auth.getName();
+        System.out.println("__________________________" + nameUser);
         User user1 = (User) userService.loadUserByUsername(nameUser);
         String roles = user1.getListRoles();
         model.addAttribute("name", nameUser);
@@ -126,12 +125,14 @@ public class UserController {
         DefaultOidcUser userOAuth = (DefaultOidcUser) auth.getPrincipal();
         String role = userOAuth.getAuthorities().toArray()[0].toString();
         String email = (String) userOAuth.getAttributes().get("email");
-        Set<Role> roles = new HashSet<>();
-        roles.add(new Role(role));
-        User user = new User(email, null, 0);
-        user.setRolesOnForm(role);
+        String name = (String) userOAuth.getAttributes().get("naim");
+        if (userService.hasNmaOnDB(email) == false) {
+            User user = new User(email, null, 0);
+            user.setRolesOnForm(role);
+            userService.add(user);
+        }
+       // System.out.println(userService.hasNmaOnDB(email));
 
-        userService.add(user);
         return "admin";
     }
 

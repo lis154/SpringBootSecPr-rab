@@ -160,18 +160,18 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserByName(String name) {
-        Query query = entityManager.createQuery("FROM User where name = :name");
-        query.setParameter("name", name);
+    public User getUserByName(String email) {
+        Query query = entityManager.createQuery("FROM User where email = :email");
+        query.setParameter("email", email);
         return (User) query.getSingleResult();
 
 
     }
 
     @Override
-    public boolean hasNmaOnDB(String name1) {
-        Query query = entityManager.createQuery("SELECT COUNT(*) FROM User where name = :name");
-        query.setParameter("name", name1);
+    public boolean hasNmaOnDB(String email) {
+        Query query = entityManager.createQuery("SELECT COUNT(*) FROM User where email = :email");
+        query.setParameter("email", email);
         int rez = ((Number) query.getSingleResult()).intValue();
         if (rez == 0){
             return false;
@@ -185,7 +185,7 @@ public class UserDAOImpl implements UserDAO {
         Query query = entityManager.createQuery("SELECT COUNT(*) FROM User ");
 
         int rez = ((Number) query.getSingleResult()).intValue();
-        System.out.println(rez);
+      //  System.out.println(rez);
         return rez;
     }
 

@@ -1,7 +1,7 @@
 async function addNewUser() {
     var data = {
         id: $("#id", "#exampleModalLong").val(),
-        name: $("#name", "#exampleModalLong").val(),
+        email: $("#email", "#exampleModalLong").val(),
         password: $("#password", "#exampleModalLong").val(),
         age: $("#age", "#exampleModalLong").val(),
         roles: [$("#role", "#exampleModalLong").val()],

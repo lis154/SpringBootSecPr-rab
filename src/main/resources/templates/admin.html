@@ -36,7 +36,7 @@
 <!--<nav class="navbar navbar-expand-lg navbar-light bg-light  background-color.navbar-dark"> -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="navbar-brand col-md-11" >
-        <a href="#" class="navbar-brand"> <p th:text="${name} + ' with role '+ ${role}">with role</p> </a>
+        <a href="#" class="navbar-brand"> <p th:text="${email} + ' with role '+ ${role}">with role</p> </a>
     </div>
     <div class="col-md-1 "><span class="pull-right text-light"><a href="/logout" class="text-light" >LOGOUT</a></span></div>
 
@@ -77,7 +77,7 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
+                            <th>Email</th>
                             <th>Password</th>
                             <th>Age</th>
                             <th>Role</th>
@@ -133,8 +133,8 @@
                 <div class=" container col-8 text-center" >
                     <!--                    <form action="/admin/edit" method="POST">-->
                     <div class="form-group">
-                        <label for="name"><b>name</b></label>
-                        <input type="text" name="name" class="form-control" id="name"  placeholder="">
+                        <label for="email"><b>name</b></label>
+                        <input type="text" name="email" class="form-control" id="email"  placeholder="">
                     </div>
                     <div class="form-group">
                         <label for="password"><b><p>Password</p></b></label>
@@ -177,8 +177,8 @@
                 <div class=" container col-8 text-center" >
 <!--                    <form action="/admin/delete" method="POST">-->
                         <div class="form-group">
-                            <label for="name"><b>name</b></label>
-                            <input type="text" name="name" class="form-control" id="nameD"  placeholder="">
+                            <label for="email"><b>email</b></label>
+                            <input type="text" name="email" class="form-control" id="emailD"  placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="password"><b><p>Password</p></b></label>
@@ -208,8 +208,8 @@
 
 <script>
     $(document).on("click", ".open-AddBookDialog", function () {
-        var name1 = $(this).data('name');
-        $(".modal-body #name").val( name1 );
+        var email1 = $(this).data('email');
+        $(".modal-body #email").val( email1 );
         var password1 = $(this).data('password');
         $(".modal-body #password").val( password1 );
         var age1 = $(this).data('age');
@@ -222,8 +222,8 @@
 </script>
 <script>
     $(document).on("click", ".open-DeleteDel", function () {
-        var name1 = $(this).data('name');
-        $(".modal-body #nameD").val( name1 );
+        var email1 = $(this).data('email');
+        $(".modal-body #emailD").val( email1 );
         var password1 = $(this).data('password');
         $(".modal-body #passwordD").val( password1 );
         var age1 = $(this).data('age');

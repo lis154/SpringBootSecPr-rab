@@ -23,9 +23,10 @@ public class RestControllerC {
 
     @RequestMapping(value = "/admin/edit/json", method = RequestMethod.POST)
     public User EdUserEdit(@RequestBody User user) {
-
+        System.out.println("edit_user"  + user);
         userService.edit(user);
-        System.out.println(user);
+        System.out.println("edit_user"  + user);
+       // System.out.println(user);
         return user;
     }
 
@@ -33,7 +34,7 @@ public class RestControllerC {
     public User DelUser(@RequestBody User user) {
 
         userService.delete(user.getId());
-        System.out.println("DELETE-USER" + user);
+      //  System.out.println("DELETE-USER" + user);
         return user;
     }
 
@@ -41,9 +42,9 @@ public class RestControllerC {
     public List<User> EdUserAll() {
         List<User> listUser = userService.allUser(page);
 
-        System.out.println(listUser);
+       // System.out.println(listUser);
         User user = listUser.get(1);
-        System.out.println(user);
+       // System.out.println(user);
         return  listUser;
     }
 

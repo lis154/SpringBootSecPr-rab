@@ -36,7 +36,7 @@
 <!--<nav class="navbar navbar-expand-lg navbar-light bg-light  background-color.navbar-dark"> -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="navbar-brand col-md-11" >
-        <a href="#" class="navbar-brand"> <p th:text="${user.name} + ' with role '+ ${user.getListRoles()}"></p> </a>
+        <a href="#" class="navbar-brand"> <p th:text="${user.email} + ' with role '+ ${user.getListRoles()}"></p> </a>
     </div>
     <div class="col-md-1 "><span class="pull-right text-light"><a href="/logout" class="text-light" >LOGOUT</a></span></div>
 
@@ -69,7 +69,7 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
+                            <th>email</th>
                             <th>Password</th>
                             <th>Age</th>
                             <th>Role</th>
@@ -79,7 +79,7 @@
                         <div th:each="el : ${user}">
                             <tr>
                                 <td><p th:text="${user.id}"/></td>
-                                <td><p th:text="${user.name}"/></td>
+                                <td><p th:text="${user.email}"/></td>
                                 <td><p th:text="${user.password}"/></td>
                                 <td><p th:text="${user.age}"/></td>
                                 <td><p th:text="${user.getListRoles()}"/></td>

@@ -55,7 +55,7 @@
 <!--<nav class="navbar navbar-expand-lg navbar-light bg-light  background-color.navbar-dark"> -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="navbar-brand col-md-11">
-        <a href="#" class="navbar-brand"><p th:text="${name} + ' with role '+ ${role}">with role</p></a>
+        <a href="#" class="navbar-brand"><p th:text="${email} + ' with role '+ ${role}">with role</p></a>
     </div>
     <div class="col-md-1 "><span class="pull-right text-light"><a href="/logout" class="text-light">LOGOUT</a></span>
     </div>
@@ -100,8 +100,8 @@
                     <div class=" container col-3 text-center">
                         <form action="/admin/add" method="POST">
                             <div class="form-group">
-                                <label for="name"><p>Name</p></label>
-                                <input type="text" name="name" class="form-control" id="name" placeholder="">
+                                <label for="email"><p>email</p></label>
+                                <input type="text" name="email" class="form-control" id="email" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>

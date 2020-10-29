@@ -19,8 +19,11 @@ public class User  implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @Column(name = "name")
-    String name;
+    @Column(name = "email")
+    String email;
+
+
+
 
     @Column(name = "password")
     String password;
@@ -31,35 +34,35 @@ public class User  implements UserDetails {
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     Set<Role> roles;
 
-    public User(int id, String name, String password, int age, Set<Role> roles) {
+    public User(int id, String email, String password, int age, Set<Role> roles) {
         this.id = id;
-        this.name = name;
+        this.email = email;
         this.password = password;
         this.age = age;
         this.roles = roles;
     }
 
-    public User(String name, String password, int age) {
-        this.name = name;
+    public User(String email, String password, int age) {
+        this.email = email;
         this.password = password;
         this.age = age;
     }
 
-    public User(int id, String name, String password, int age) {
+    public User(int id, String email, String password, int age) {
         this.id = id;
-        this.name = name;
+        this.email = email;
         this.password = password;
         this.age = age;
     }
 
-    public User(String name, String password, int age, Set<Role> roles) {
-        this.name = name;
+    public User(String email, String password, int age, Set<Role> roles) {
+        this.email = email;
         this.password = password;
         this.age = age;
         this.roles = roles;
     }
 
-    public User(String email, Object name, Object password, Set<Role> roles) {
+    public User(String email, Object age, Object password, Set<Role> roles) {
     }
 
     public void setRoles(Set<Role> roles) {
@@ -77,8 +80,8 @@ public class User  implements UserDetails {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
 
@@ -90,8 +93,8 @@ public class User  implements UserDetails {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {
@@ -104,6 +107,8 @@ public class User  implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        System.out.println("hasAutority class USER  ----  " + roles);
+       // System.out.println(this);
         return roles;
     }
 
@@ -113,7 +118,7 @@ public class User  implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override
@@ -140,7 +145,7 @@ public class User  implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", age=" + age +
                 ", roles=" + roles +
@@ -167,26 +172,27 @@ public class User  implements UserDetails {
 
     public boolean isAdmin() {
         for (Role r : this.getRoles()) {
-            System.out.println("+++++++++++++" + r.getRole());
+           // System.out.println("+++++++++++++" + r.getRole());
             if (r.getRole().equals("ROLE_ADMIN")) {
                 return true;
             }
         }
-        System.out.println("false");
+      //  System.out.println("false");
         return false;
     }
 
 
     public boolean getIsAdmin() {
         for (Role r : this.getRoles()) {
-            System.out.println("+++++++++++++" + r.getRole());
+          //  System.out.println("+++++++++++++" + r.getRole());
             if (r.getRole().equals("ROLE_ADMIN")) {
                 return true;
             }
         }
-        System.out.println("false");
+       // System.out.println("false");
         return false;
     }
+
 
 
 }

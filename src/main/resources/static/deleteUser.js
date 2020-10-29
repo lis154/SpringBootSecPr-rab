@@ -1,7 +1,7 @@
 async function deleteUser() {
     var data = {
         id: $("#idD", "#ModalDelete").val(),
-        name: $("#nameD", "#ModalDelete").val(),
+        email: $("#emailD", "#ModalDelete").val(),
         password: $("#passwordD", "#ModalDelete").val(),
         age: $("#ageD", "#ModalDelete").val(),
         roles: [$("#roleD", "#ModalDelete").val()],

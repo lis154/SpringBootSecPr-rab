@@ -41,10 +41,7 @@ public class RestControllerC {
     @RequestMapping(value = "/admin/json", method = RequestMethod.POST)
     public List<User> EdUserAll() {
         List<User> listUser = userService.allUser(page);
-
-       // System.out.println(listUser);
         User user = listUser.get(1);
-       // System.out.println(user);
         return  listUser;
     }
 

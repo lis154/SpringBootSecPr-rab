@@ -120,11 +120,6 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    //    @RequestMapping(value = "/admin/delete/{id}", method = RequestMethod.GET)
-//    public String delete(@PathVariable("id") int id, Model model) {
-//        userService.delete(id);
-//        return "redirect:/admin";
-//    }
     @RequestMapping(value = "/admin/delete", method = RequestMethod.POST)
     public String delete(@RequestParam String id, Model model) {
         int id1 = Integer.valueOf(id);
@@ -166,23 +161,11 @@ public class UserController {
         DefaultOidcUser userOAuth = (DefaultOidcUser) auth.getPrincipal();
         String role = userOAuth.getAuthorities().toArray()[0].toString();
         String email = (String) userOAuth.getAttributes().get("email");
-        String name = (String) userOAuth.getAttributes().get("name");
-
-        String nameUser = auth.getName();
-      //  System.out.println("Name-for-GOOGLE-auth---------" + nameUser);
-      //  System.out.println(auth.toString());
-
-
-      //  System.out.println(email);
-
-
-
         if (userService.hasNmaOnDB(email) == false) {
             User user = new User(email, null, 0);
             user.setRolesOnForm(role);
             userService.add(user);
         }
-       // System.out.println(userService.hasNmaOnDB(email));
 
         return "admin";
     }

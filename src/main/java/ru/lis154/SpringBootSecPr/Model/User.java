@@ -172,24 +172,20 @@ public class User  implements UserDetails {
 
     public boolean isAdmin() {
         for (Role r : this.getRoles()) {
-           // System.out.println("+++++++++++++" + r.getRole());
             if (r.getRole().equals("ROLE_ADMIN")) {
                 return true;
             }
         }
-      //  System.out.println("false");
         return false;
     }
 
 
     public boolean getIsAdmin() {
         for (Role r : this.getRoles()) {
-          //  System.out.println("+++++++++++++" + r.getRole());
             if (r.getRole().equals("ROLE_ADMIN")) {
                 return true;
             }
         }
-       // System.out.println("false");
         return false;
     }
 

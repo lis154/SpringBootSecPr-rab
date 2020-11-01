@@ -24,10 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomAuthenticationProvider authProvider;
 
-//    @Qualifier("oauth2ClientContext")
-//    @Autowired()
-//    private OAuth2ClientContext oAuthClientContext;
-    
+
     public SecurityConfig(@Qualifier("userServiceImpl") UserDetailsService userDetailsService, SuccessUserHandler successUserHandler) {
         this.userDetailsService = userDetailsService;
         this.successUserHandler = successUserHandler;
@@ -70,45 +67,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin").access("hasAuthority('ROLE_ADMIN')")
                 .and().formLogin()  // Spring сам подставит свою логин форму
                 .successHandler(successUserHandler); // подключаем наш SuccessHandler для перенеправлени
-
+        System.out.println("http-vvod-login");
 
         http.csrf().disable().authorizeRequests()
-               // antMatcher("/**").authorizeRequests()
+                // antMatcher("/**").authorizeRequests()
                 //.antMatchers("/").permitAll()
                 //.anyRequest().authenticated()
                 .and().logout().logoutSuccessUrl("/login")
                 .and()
                 .oauth2Login()
-                 .successHandler(successUserHandler); // подключаем наш SuccessHandler для перенеправлени
+                .successHandler(successUserHandler); // подключаем наш SuccessHandler для перенеправлени
 
-//        http.csrf().disable().authorizeRequests()
-//
-//                .antMatchers("/user").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')") // разрешаем входить на /user пользователям с ролью User
-//                .antMatchers("/admin/add").access("hasAuthority('ROLE_ADMIN')")
-//                .antMatchers("/admin/add/*").access("hasAuthority('ROLE_ADMIN')")
-//                .antMatchers("/admin/edit").access("hasAuthority('ROLE_ADMIN')")
-//                .antMatchers("/admin/bootPrim").access("hasAuthority('ROLE_ADMIN')")
-//                .antMatchers("/admin/edit/*").access("hasAuthority('ROLE_ADMIN')")
-//                .antMatchers("/admin/delete").access("hasAuthority('ROLE_ADMIN')")
-//                .antMatchers("/admin").access("hasAuthority('ROLE_ADMIN')")
-//                .and().formLogin()  // Spring сам подставит свою логин форму
-//                .successHandler(successUserHandler); // подключаем наш SuccessHandler для перенеправлени
-
-
-
-//                .and().formLogin()  // Spring сам подставит свою логин форму
-//                .successHandler(successUserHandler); // подключаем наш SuccessHandler для перенеправления по ролям
     }
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.httpBasic()
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/**")
-//                .authenticated();
-//    }
-
 
 
     // Необходимо для шифрования паролей
@@ -117,37 +87,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public static NoOpPasswordEncoder passwordEncoder() {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
-
-//    private Filter ssoFilter() {
-//        OAuth2ClientAuthenticationProcessingFilter googleFilter = new OAuth2ClientAuthenticationProcessingFilter(
-//                "/login/google");
-//        googleFilter.setAuthenticationSuccessHandler(new LoginSuccessHandler());
-//        OAuth2RestTemplate googleTemplate = new OAuth2RestTemplate(google(), oAuth2ClientContext);
-//        googleFilter.setRestTemplate(googleTemplate);
-//        CustomUserInfoTokenServices tokenServices = new CustomUserInfoTokenServices(
-//                googleResource().getUserInfoUri(), google().getClientId());
-//        tokenServices.setRestTemplate(googleTemplate);
-//        googleFilter.setTokenServices(tokenServices);
-//        tokenServices.setUserDAO(userDAO);
-//        tokenServices.setPasswordEncoder(passwordEncoder);
-//        return googleFilter;
-//    }
-
-//    private OAuth2ClientAuthenticationProcessingFilter oauth2SsoFilter() {
-//        ApplicationContext applicationContext = this.getApplicationContext();
-//        OAuth2SsoProperties sso = applicationContext.getBean(OAuth2SsoProperties.class);
-//        OAuth2RestOperations restTemplate = applicationContext.getBean(UserInfoRestTemplateFactory.class)
-//                .getUserInfoRestTemplate();
-//        ResourceServerTokenServices tokenServices = applicationContext.getBean(ResourceServerTokenServices.class);
-//        OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(sso
-//                .getLoginPath());
-//        filter.setRestTemplate(restTemplate);
-//        filter.setTokenServices(tokenServices);
-//        filter.setApplicationEventPublisher(applicationContext);
-//        //filter.setAuthenticationSuccessHandler(new YourOwnAuthenticationSuccessHandler());
-//        return filter;
-//    }
-
 
 
 

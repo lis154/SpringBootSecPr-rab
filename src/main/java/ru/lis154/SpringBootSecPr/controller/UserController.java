@@ -1,6 +1,7 @@
 package ru.lis154.SpringBootSecPr.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
@@ -11,12 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.lis154.SpringBootSecPr.Model.Role;
 import ru.lis154.SpringBootSecPr.Model.User;
 import ru.lis154.SpringBootSecPr.service.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -32,31 +35,23 @@ public class UserController {
     public String allUser(@RequestParam(defaultValue = "1") int page, Model model) {
 
         List<User> listUser = userService.allUser(page);
-    //    int userCount = userService.userCount();
-     //   int pageCout = (userCount + 9) / 10;
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-       // System.out.println("++++++++++++++" + auth);
 
+        System.out.println("/ ADMIN ___________" + auth);
 
         String nameUser= "";
         if (auth.getClass().toString().equals("class org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken")){
             DefaultOidcUser userOAuth = (DefaultOidcUser) auth.getPrincipal();
              nameUser = (String) userOAuth.getAttributes().get("email");
-         //   System.out.println("if ==== " + nameUser);
+
         } else {
              nameUser = auth.getName();
-       //     System.out.println("else ====" + nameUser);
+
         }
 
-      //  System.out.println("Class ------ " + auth.getClass());
 
-       // String nameUser = auth.getName();
-
-//        DefaultOidcUser userOAuth = (DefaultOidcUser) auth.getPrincipal();
-//        String nameUser = (String) userOAuth.getAttributes().get("email");
-    //    System.out.println("Name-for-GOOGLE-auth---------" + nameUser);
-   //     System.out.println(auth);
         User user1 = (User) userService.loadUserByUsername(nameUser);
         String roles = user1.getListRoles();
         model.addAttribute("users", listUser);
@@ -76,6 +71,12 @@ public class UserController {
             DefaultOidcUser userOAuth = (DefaultOidcUser) auth.getPrincipal();
             nameUser = (String) userOAuth.getAttributes().get("email");
             System.out.println("if googel ==== " + nameUser);
+            Set<Role> list = userService.getByName(nameUser).getRoles();
+            String password = userService.getByName(nameUser).getPassword();
+            UsernamePasswordAuthenticationToken userToke =   new UsernamePasswordAuthenticationToken(nameUser, password, list);
+            SecurityContextHolder.getContext().setAuthentication(userToke);
+            System.out.println("++++++++++++++++++++++ AUTH_TOKEN"  +  auth.getPrincipal());
+
         } else {
             nameUser = auth.getName();
             System.out.println("else local ====" + nameUser);
@@ -83,8 +84,7 @@ public class UserController {
 
 
         User user1 = (User) userService.loadUserByUsername(nameUser);
-        //  User listUser = (User) userService.loadUserByUsername(name);
-        // model.addAttribute("user", listUser);
+
         System.out.println("getAuthoritis +  USER " + user1.getAuthorities());
         model.addAttribute("user", user1);
         return "user";

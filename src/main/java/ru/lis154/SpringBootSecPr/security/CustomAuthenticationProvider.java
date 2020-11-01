@@ -24,9 +24,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication auth)
             throws AuthenticationException {
         String username;
+        System.out.println("befor google avto");
         if (auth.getClass().toString().equals("class org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken")){
             DefaultOidcUser userOAuth = (DefaultOidcUser) auth.getPrincipal();
             username = (String) userOAuth.getAttributes().get("email");
+            System.out.println("google");
         } else {
             username = auth.getName();
         }
